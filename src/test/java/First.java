@@ -1,36 +1,120 @@
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.ProfilesIni;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class First {
 
-    public WebDriver driver = new FirefoxDriver();
+    private WebDriver driver;
+    private JavascriptExecutor js;
 
-    @BeforeEach
+    @BeforeAll
     public void init(){
+        //driver.manage().
+        FirefoxOptions foptions = new FirefoxOptions();
+        foptions.addArguments("--disable-notifications");
+
+        driver = new FirefoxDriver(foptions);
+        System.setProperty("webdriver.gecko.driver", "/Users/daniellutziger/IdeaProjects/selenium/geckodriver.exe");
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+        js = (JavascriptExecutor) driver;
+
 
     }
 
-    @AfterEach
+    @AfterAll
     public void remove(){
         //quit firefox
-
+        //driver.quit();
     }
 
     @Test
-    public void verifyHomePageTitle() throws Exception {
-        System.setProperty("webdriver.gecko.driver", "/Users/daniellutziger/IdeaProjects/selenium/geckodriver.exe");
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    public void facebook(){
+        driver.get("https://www.facebook.com");
+        String mail = "smueller98tindee@gmail.com";
+        String pw = "daniel88?D";
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        WebElement usern = driver.findElement(By.id("email"));
+        usern.sendKeys(mail);
+        WebElement pwf = driver.findElement(By.id("pass"));
+        pwf.sendKeys(pw);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"u_0_2\"]")));
+        WebElement login = driver.findElement(By.xpath("//*[@id=\"u_0_2\"]"));
+        login.click();
+
+        js.executeScript("console.log('Welcome to Damn');");
+        driver.manage().window().maximize();
+
+        WebElement screeny = driver.findElement(By.className("_3ixn"));
+        screeny.click();
+
+        List<WebElement> names = driver.findElements(By.className("/html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div/div[6]/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div[2]/div[2]/div/div/div[1]/div/ul/li/div/div[2]/div[1]/div[2]/div[1]/strong/a"));
+        System.out.println(names);
+        //html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div/div[6]/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div[2]/div[2]/div/div/div[1]/div/ul/li/div/div[2]/div[1]/div[2]/div[1]/strong/a
+        //html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div/div[6]/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div[2]/div[2]/div/div/div[1]/div/ul/li[2]/div/div[2]/div[1]/div[2]/div[1]/strong/a
+        //*[@id="js_28h"]
+        //*[@id="js_28h"]
+        //*[@id="js_2dn"]
+        /*
+        List<WebElement> friends = driver.findElements(By.className("FriendRequestAdd"));
+
+        int f = 0;
+        for(WebElement friend : friends){
+            friend.click();
+            System.out.println(f++ + " : " + friend.getTagName());
+        }
+
+        WebElement posty = driver.findElement(By.name("xhpc_message"));
+
+        posty.click();
+        driver.findElement(By.className("_1p1v")).click();
+
+*/
+
+        driver.findElement(By.className("_1p1v")).sendKeys("asdf");
+        //posty.sendKeys("I like d-k");
+
+
+        WebElement PostBtn = driver.findElement(By.cssSelector("button[data-testid='react-composer-post-button']"));
+        PostBtn.click();
+
+
+        //WebElement element = driver.findElement(By.name("q"));
+        //element.sendKeys("ffff");
+        //element.submit();
+/*        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div/div/div/div[2]/div[1]/div[2]/div/a")));
+        WebElement posty = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div/div/div/div[2]/div[1]/div[2]/div/a"));
+        posty.click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/div[2]/div/div[2]/div/div[1]/ol/li/div/div/div/div/div/div[2]/div/div/div/div/div[2]/div/div[1]/div/div[1]/div/div[2]/div/div/div")).click();
+
+        WebElement share = driver.findElement(By.xpath("//*[@id=\"js_6b\"]/div[2]/div[3]/div[2]/div/div/button/span"));
+ */   }
+
+
+
+    @Test
+    public void verifyHomePageTitle() {
 
         driver.get("http://www.google.com/");
 
@@ -55,9 +139,6 @@ public class First {
 
     @Test
     public void netflix(){
-        System.setProperty("webdriver.gecko.driver", "/Users/daniellutziger/IdeaProjects/selenium/geckodriver.exe");
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
         driver.get("https://www.netflix.com ");
         driver.manage().window().maximize();
 
@@ -73,8 +154,8 @@ public class First {
         WebElement submit = driver.findElement(By.xpath("/html/body/div[1]/div/div[3]/div/div/div[1]/form/button"));
         WebElement rememberme = driver.findElement(By.className("login-remember-me-label-text"));
 
-        String mail = "your email";
-        String pw = "your password";
+        String mail = "ffff";
+        String pw = "fff";
         login.sendKeys(mail);
         password.sendKeys(pw);
         rememberme.click();
@@ -89,18 +170,14 @@ public class First {
         mylist.click();
 
         WebElement movie = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div[2]/div/div/div[1]/div/div/div/div/div/div[4]"));
+
+
+        movie = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div[2]/div/div/div[14]/div/div/div/div/div/div[5]"));
         movie.click();
 
-        driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div[2]/div/div/div[1]/div/span/span/div/div/div[2]/div/div/div/div/div/div/div[1]/div/div[4]/a/span")).click();
-
-        }
-}/**
-
-//*[@id="appMountPoint"]/div/div/div/div/div[1]/div/div/div/div[1]/div/div/input
-//*[@id="appMountPoint"]/div/div/div/div/div[1]/div/div/div/div[1]/div/button
+        //driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div[2]/div/div/div[1]/div/span/span/div/div/div[2]/div/div/div/div/div/div/div[1]/div/div[4]/a/span")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div/div[2]/div/div[2]/div/div/div[14]/div/span/span/div/div/div[2]/div/div/div/div/div/div/div[1]/div/div[5]/a/span/span[2]")).click();
 
 
-<div class="searchInput">
-<span class="icon-search"></span><
-        input type="text" placeholder="Titles, people, genres" data-search-input="true" dir="ltr" data-uia="search-box-input" maxlength="80" value="" style="opacity: 1; transition-duration: 300ms;"><span class="icon-close empty"></span></div>
- **/
+    }
+}
