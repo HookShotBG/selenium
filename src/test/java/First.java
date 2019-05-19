@@ -43,8 +43,25 @@ public class First {
         //driver.quit();
     }
 
+
     @Test
-    public void facebook(){
+    public void spermbot(){
+        driver.get("https://www.supremenewyork.com");
+        driver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        boolean complete = (boolean) wait.until(js.executeScript("return document.readyState").equals("complete"));
+        
+        driver.findElement(By.xpath("//*[@id=\"wrap\"]/nav/ul/li[4]/a/span"));
+
+        WebElement itemlist = driver.findElement(By.xpath("//*[@id=\"shop-scroller\"]"));
+        List<WebElement> allItems = itemlist.findElements(By.tagName("li"));
+
+        System.out.println(allItems);
+    }
+
+    @Test
+    public void facebook() throws Exception {
         driver.get("https://www.facebook.com");
         String mail = "smueller98tindee@gmail.com";
         String pw = "daniel88?D";
@@ -54,8 +71,8 @@ public class First {
         usern.sendKeys(mail);
         WebElement pwf = driver.findElement(By.id("pass"));
         pwf.sendKeys(pw);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"u_0_2\"]")));
-        WebElement login = driver.findElement(By.xpath("//*[@id=\"u_0_2\"]"));
+        Thread.sleep(2000);
+        WebElement login = driver.findElement(By.id("u_0_2"));
         login.click();
 
         js.executeScript("console.log('Welcome to Damn');");
@@ -64,14 +81,9 @@ public class First {
         WebElement screeny = driver.findElement(By.className("_3ixn"));
         screeny.click();
 
-        List<WebElement> names = driver.findElements(By.className("/html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div/div[6]/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div[2]/div[2]/div/div/div[1]/div/ul/li/div/div[2]/div[1]/div[2]/div[1]/strong/a"));
-        System.out.println(names);
-        //html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div/div[6]/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div[2]/div[2]/div/div/div[1]/div/ul/li/div/div[2]/div[1]/div[2]/div[1]/strong/a
-        //html/body/div[1]/div[3]/div[1]/div/div[2]/div[2]/div[1]/div[2]/div/div[6]/div/div/div[1]/div/div/div/div/div[1]/div/div/div/div[2]/div[2]/div/div/div[1]/div/ul/li[2]/div/div[2]/div[1]/div[2]/div[1]/strong/a
-        //*[@id="js_28h"]
-        //*[@id="js_28h"]
-        //*[@id="js_2dn"]
-        /*
+        Thread.sleep(1000);
+        driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[1]/div/div/div/div[2]/div[1]/div[2]/div/a")).click();
+
         List<WebElement> friends = driver.findElements(By.className("FriendRequestAdd"));
 
         int f = 0;
@@ -83,16 +95,17 @@ public class First {
         WebElement posty = driver.findElement(By.name("xhpc_message"));
 
         posty.click();
-        driver.findElement(By.className("_1p1v")).click();
+        Thread.sleep(1000);
+        posty.sendKeys("Je suis gae");
+  //      driver.findElement(By.className("_1p1v")).click();
 
-*/
 
-        driver.findElement(By.className("_1p1v")).sendKeys("asdf");
+//        driver.findElement(By.className("_1p1v")).sendKeys("asdf");
         //posty.sendKeys("I like d-k");
 
 
-        WebElement PostBtn = driver.findElement(By.cssSelector("button[data-testid='react-composer-post-button']"));
-        PostBtn.click();
+  //      WebElement PostBtn = driver.findElement(By.cssSelector("button[data-testid='react-composer-post-button']"));
+    //    PostBtn.click();
 
 
         //WebElement element = driver.findElement(By.name("q"));
