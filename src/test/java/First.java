@@ -43,6 +43,25 @@ public class First {
         //driver.quit();
     }
 
+    @Test
+    public void onedrive(){
+        driver.get("https://onedrive.live.com/?authkey=%21AHBovx29fsej7VA&id=8483A5BA282ED274%214740&cid=8483A5BA282ED274");
+        driver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        List<WebElement> imgs = driver.findElements(By.className("ms-List-cell"));
+
+        System.out.println(imgs);
+
+        for(WebElement img : imgs){
+            img.click();
+            WebElement download = driver.findElement(By.name("Download"));
+            download.click();
+            WebElement close = driver.findElement(By.name("Close"));
+            close.click();
+
+        }
+    }
 
     @Test
     public void spermbot(){
@@ -50,8 +69,8 @@ public class First {
         driver.manage().window().maximize();
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        boolean complete = (boolean) wait.until(js.executeScript("return document.readyState").equals("complete"));
-        
+        //boolean complete = (boolean) wait.until(js.executeScript("return document.readyState").equals("complete"));
+
         driver.findElement(By.xpath("//*[@id=\"wrap\"]/nav/ul/li[4]/a/span"));
 
         WebElement itemlist = driver.findElement(By.xpath("//*[@id=\"shop-scroller\"]"));
