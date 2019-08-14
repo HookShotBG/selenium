@@ -10,8 +10,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class InstaBruteForce {
@@ -33,7 +37,6 @@ public class InstaBruteForce {
 
     @Test
     public void spamIGPhisher(){
-
         for(int i = 97; i<=122; i++) {
             for(int j = 100; j<=122; j++) {
                for(int k = 105; k<=122; k++) {
@@ -67,6 +70,38 @@ public class InstaBruteForce {
         }
     }
 
+
+    @Test
+    public void spamPhisherFromFile(){
+        for(int i = 0; i<100;i++) {
+        driver.get("https://kontoeinstellung.com");
+        driver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        WebElement username = driver.findElement(By.xpath("/html/body/div[2]/div/form/input[1]"));
+        WebElement password = driver.findElement(By.xpath("/html/body/div[2]/div/form/input[2]"));
+        WebElement submit = driver.findElement(By.xpath("/html/body/div[2]/div/form/b/input"));
+
+            String input = "";
+            String pwd = "";
+            try (Stream<String> lines = Files.lines(Paths.get("usernames.txt"))) {
+                input = lines.skip(new Random().nextInt(400000)).findFirst().get();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            try (Stream<String> lines = Files.lines(Paths.get("8-more-passwords.txt"))) {
+                pwd = lines.skip(new Random().nextInt(86000)).findFirst().get();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            System.out.println(input);
+            System.out.println(pwd);
+            username.sendKeys(input);
+            password.sendKeys(pwd);
+            submit.click();
+        }
+    }
 
     @AfterAll
     public void remove(){
