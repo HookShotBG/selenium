@@ -82,8 +82,8 @@ public class First {
     @Test
     public void facebook() throws Exception {
         driver.get("https://www.facebook.com");
-        String mail = "smueller98tindee@gmail.com";
-        String pw = "daniel88?D";
+        String mail = "penis@gmail.com";
+        String pw = "xnxx?D";
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement usern = driver.findElement(By.id("email"));
