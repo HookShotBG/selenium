@@ -45,7 +45,7 @@ public class First {
 
     @Test
     public void onedrive(){
-        driver.get("https://onedrive.live.com/?authkey=%21AHBovx29fsej7VA&id=8483A5BA282ED274%214740&cid=8483A5BA282ED274");
+        driver.get("asdf");
         driver.manage().window().maximize();
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
